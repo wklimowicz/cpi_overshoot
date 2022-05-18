@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install libcurl4-openssl-dev 
       - name: Install packages
-        run: sudo R -e 'install.packages(c("pracma", "here", "tidyr", "dplyr","ggplot2", "jsonlite", "purrr", "lubridate", "curl"))'
+        run: sudo R -e 'install.packages(c("pracma", "here", "tidyr", "dplyr","ggplot2", "jsonlite", "purrr", "lubridate", "curl", "svglite"))'
         #      - uses: actions/checkout@v2
         #      - uses: r-lib/actions/setup-r@v1
         #      - name: Load dependencies
