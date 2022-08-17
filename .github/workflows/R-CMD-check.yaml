@@ -6,7 +6,7 @@ name: R-CMD-check
 on: 
   push:
   schedule:
-   - cron:  '0 0 20 * *'
+   - cron:  '0 10 * * *'
 
 
 
