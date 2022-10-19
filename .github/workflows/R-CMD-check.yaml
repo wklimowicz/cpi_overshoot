@@ -19,7 +19,7 @@ jobs:
     #        image: rocker/tidyverse:latest
     steps:
       - name: Get current date
-        run: echo "{date}={$(date + '%Y-%m-%d')}" >> $GITHUB_ENV
+        run: echo "{date}={$(date +'%Y-%m-%d')}" >> $GITHUB_ENV
         # id: date
         # run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - uses: actions/checkout@v3
