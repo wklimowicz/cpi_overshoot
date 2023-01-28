@@ -103,7 +103,7 @@ cpi_data |>
   ) |>
   tidyr::pivot_longer(cols = c("Target", "Trend", "Actual")) |>
   ggplot() +
-  geom_line(aes(x = date, y = value, color = name), size = 1.5) +
+  geom_line(aes(x = date, y = value, color = name), linewidth = 1.5) +
   geom_text(aes(
     x = date("2021-01-01"),
     y = 102 + 0.3,
@@ -135,3 +135,42 @@ ggsave("cpi_overshoot.svg",
   width = 10,
   height = 10
 )
+
+# TODO: some instantenous measure. See here
+# https://www.janeeckhout.com/wp-content/uploads/Instantaneous_Inflation.pdf
+
+cpi_data %>%
+  mutate(change = (value - lag(value)) / lag(value)) %>%
+  mutate(change = (1 + change)^12 - 1) %>%
+  # filter(date >= "2020-01-01") %>%
+  ggplot() +
+  geom_line(aes(x = date, y = change), linewidth = 1.5) +
+  scale_y_continuous(labels = scales::percent) +
+  geom_text(aes(
+    x = date,
+    y = change,
+    label = round(change, 3) * 100,
+  ),
+  size = 6,
+  check_overlap = T
+  )
+
+
+  geom_text(aes(
+    x = date("2019-09-01"),
+    y = 104 + 0.3,
+    label = paste0("Average since 2020: ", round(actual_growth * 100, 2), "%")
+  ),
+  size = 7,
+  check_overlap = T
+  ) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  labs(
+    title = "CPI vs Target",
+    x = "",
+    y = "CPI Index (2020 Jan = 100)",
+    color = ""
+  ) +
+  custom_theme() +
+  scale_color_manual(values = cbbPalette)
+

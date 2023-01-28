@@ -6,4 +6,5 @@
 ![plot](cpi_overshoot.svg)
 
 
+<!-- ![plot](instantenous_inflation.svg) -->
 
