@@ -154,23 +154,3 @@ cpi_data %>%
   size = 6,
   check_overlap = T
   )
-
-
-  geom_text(aes(
-    x = date("2019-09-01"),
-    y = 104 + 0.3,
-    label = paste0("Average since 2020: ", round(actual_growth * 100, 2), "%")
-  ),
-  size = 7,
-  check_overlap = T
-  ) +
-  scale_y_continuous(breaks = scales::pretty_breaks()) +
-  labs(
-    title = "CPI vs Target",
-    x = "",
-    y = "CPI Index (2020 Jan = 100)",
-    color = ""
-  ) +
-  custom_theme() +
-  scale_color_manual(values = cbbPalette)
-
