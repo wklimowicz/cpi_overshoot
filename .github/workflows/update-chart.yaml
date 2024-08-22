@@ -17,12 +17,12 @@ jobs:
       #     r-version: 'renv'
       - uses: r-lib/actions/setup-renv@v2
       - name: Generate plot
-        run: Rscript -e "source(here::here('cpi_since_january_2020.R'))"
-      - name: Commit
-        run: |
-          git config --global user.name 'Wojtek Klimowicz'
-          git config --global user.email 'Github@Actions'
-          git add *
-          git commit -m 'GH Actions Update ${{env.date}}' || echo "No changes to commit"
-          git push || echo "No changes to commit" 
-
+        # run: Rscript -e "source(here::here('cpi_since_january_2020.R'))"
+        run: Rscript -e "library(ggplot2); plot(iris); ggsave('test.pdf')"
+      # - name: Commit
+      #   run: |
+      #     git config --global user.name 'Wojtek Klimowicz'
+      #     git config --global user.email 'Github@Actions'
+      #     git add *
+      #     git commit -m 'GH Actions Update ${{env.date}}' || echo "No changes to commit"
+      #     git push || echo "No changes to commit" 
