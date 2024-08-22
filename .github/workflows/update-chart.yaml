@@ -8,49 +8,16 @@ on:
 jobs:
   R-CMD-check:
     runs-on: ubuntu-latest
-    #    env:
-    #      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    #    container:
-    #        image: rocker/tidyverse:latest
     steps:
       - name: Get current date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - uses: actions/checkout@v3
-        #      - uses: r-lib/actions/setup-r@master
-        #- uses: r-lib/actions/setup-pandoc@v1
-      # - name: Update Packages
-      #   run: sudo apt-get update
-      # - name: Install dependencies
-      #   run: sudo apt-get install libcurl4-openssl-dev 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: 'renv'
+      # - uses: r-lib/actions/setup-r@v2
+      #   with:
+      #     r-version: 'renv'
       - uses: r-lib/actions/setup-renv@v2
-      # - name: Install packages
-      #   run: sudo R -e 'install.packages(c("pracma", "here", "tidyr", "dplyr","ggplot2", "jsonlite", "purrr", "lubridate", "curl", "svglite"))'
-        #      - uses: actions/checkout@v2
-        #      - uses: r-lib/actions/setup-r@v1
-        #      - name: Load dependencies
-        #        run: Rscript install.packages(c('remotes', 'rcmdcheck'))
-        #      - name: Install dependencies
-        #        run: Rscript remotes::install_deps(dependencies = TRUE)
-        #      - name: Install dependencies
-        #        run: Rscript install.packages('ggplot2')
-        #      - name: Check
-        #        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-        #shell: Rscript {0}
-      # - name: Generate plot
-      #   run: sudo Rscript -e "source(here::here('cpi_since_january_2020.R'))"
-      - name: Print wd
-        run: sudo Rscript -e "print(getwd()); print(here::here())"
-      # - name: Get package list
-      #   run: dpkg -l | grep ^ii > programs.txt
-      # - name: Get hardware list
-      #   run: lscpu > cpu.txt
-      # - name: Get hardware list2
-      #   run: sudo lshw > hardware.txt
-      # - name: Get hardware list3
-      #   run: sudo lspci > lspci.txt
+      - name: Generate plot
+        run: sudo Rscript -e "source(here::here('cpi_since_january_2020.R'))"
       - name: Commit
         run: |
           git config --global user.name 'Wojtek Klimowicz'
