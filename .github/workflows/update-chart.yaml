@@ -16,8 +16,8 @@ jobs:
       #   with:
       #     r-version: 'renv'
       - uses: r-lib/actions/setup-renv@v2
-      - name: Generate plot
-        run: sudo Rscript -e "source(here::here('cpi_since_january_2020.R'))"
+      # - name: Generate plot
+      #   run: sudo Rscript -e "source(here::here('cpi_since_january_2020.R'))"
       - name: Commit
         run: |
           git config --global user.name 'Wojtek Klimowicz'
