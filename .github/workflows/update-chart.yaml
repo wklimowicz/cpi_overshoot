@@ -39,8 +39,8 @@ jobs:
         #      - name: Check
         #        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         #shell: Rscript {0}
-      - name: Generate plot
-        run: sudo Rscript -e "source(here::here('cpi_since_january_2020.R'))"
+      # - name: Generate plot
+      #   run: sudo Rscript -e "source(here::here('cpi_since_january_2020.R'))"
       - name: Print wd
         run: sudo Rscript -e "print(getwd()); print(here::here())"
       # - name: Get package list
