@@ -1,0 +1,12 @@
+name: Test this new workflow
+
+on: push
+
+jobs:
+  something:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      - name: Print date
+        run: echo ${{env.date}}
