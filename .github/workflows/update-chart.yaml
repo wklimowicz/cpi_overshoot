@@ -29,8 +29,8 @@ jobs:
             any::lubridate
             any::svglite
             any::jsonlite
-      - name: Generate plot
-        run: Rscript cpi_since_january_2020.R
+      # - name: Generate plot
+      #   run: Rscript cpi_since_january_2020.R
       - name: Commit
         run: |
           git config --global user.name 'Wojtek Klimowicz'
