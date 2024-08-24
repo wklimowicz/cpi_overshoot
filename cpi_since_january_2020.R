@@ -4,41 +4,6 @@ library(purrr)
 library(lubridate)
 library(svglite)
 
-custom_theme <- function(plot_title_size = 30, colour = "black",
-                         size = 20, angle = 0) {
-  theme_minimal() +
-    theme(
-      plot.title = element_text(
-        family = "sans",
-        # face = "bold",
-        colour = colour,
-        size = plot_title_size
-      ),
-      axis.title.x = element_text(
-        family = "sans",
-        colour = colour,
-        size = size
-      ),
-      strip.text.x = element_text(
-        family = "sans",
-        colour = colour,
-        size = size
-      ),
-      axis.title.y = element_text(
-        family = "sans",
-        colour = colour,
-        size = size
-      ),
-      plot.caption = element_text(
-        size = 10,
-        color = "black"
-      ),
-      axis.text.x = element_text(size = 10, angle = angle, vjust = 0.5)
-    )
-}
-
-theme_set(custom_theme())
-
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 ons_time_series <- function(dataset_id, timeseries_id) {
@@ -90,8 +55,10 @@ actual_growth <- cpi_data |>
 
 actual_monthly_growth <- pracma::nthroot(actual_growth + 1, 12)
 
+final_target <- cpi_data |>
+  filter(date == max(date))
 
-cpi_data |>
+plot <- cpi_data |>
   filter(date >= "2018-01-01") |>
   mutate(actual = 1) |>
   mutate(actual = c(1[date < start_date], 1, cumprod(actual[date > start_date] * actual_monthly_growth))) |>
@@ -104,38 +71,58 @@ cpi_data |>
   tidyr::pivot_longer(cols = c("Target", "Trend", "Actual")) |>
   ggplot() +
   geom_line(aes(x = date, y = value, color = name), linewidth = 1.5) +
-  geom_text(
-    aes(
-      x = date("2021-01-01"),
-      y = 102 + 0.3,
-      label = "2%"
-    ),
-    size = 7,
-    check_overlap = T
+  annotate(
+    "text",
+    x = date("2023-01-01"),
+    y = 103.5,
+    label = "2% Target",
+    size = 9,
+    color = cbbPalette[2]
   ) +
-  geom_text(
-    aes(
-      x = date("2019-09-01"),
-      y = 104 + 0.3,
-      label = paste0("Average since 2020: ", round(actual_growth * 100, 2), "%")
-    ),
-    size = 7,
-    check_overlap = T
+  annotate(
+    "text",
+    x = date("2020-01-01"),
+    y = 111,
+    label = paste0("Average since 2020: ", round(actual_growth * 100, 2), "%"),
+    size = 9,
+    color = cbbPalette[3]
+  ) +
+  annotate(
+    "segment",
+    x = max(cpi_data$date),
+    y = final_target$trend,
+    yend = final_target$value,
+    linewidth = 0.5,
+    linetype = "dotted"
+  ) +
+  annotate(
+    "text",
+    x = max(cpi_data$date),
+    y = (final_target$trend + final_target$value) / 2,
+    label = paste0(round(above_trend, 1), "% gap"),
+    size = 10
   ) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
+  scale_x_date(limits = c(
+    ymd("2018-01-01"),
+    max(cpi_data$date) + 300
+  )) +
   labs(
     subtitle = "CPI Index (2020 Jan = 100)",
     x = NULL,
     y = NULL,
     color = NULL
   ) +
+  theme_minimal(40) +
+  scale_color_manual(values = cbbPalette) +
   theme(
-    plot.title.position = "plot"
-  ) +
-  custom_theme() +
-  scale_color_manual(values = cbbPalette)
+    plot.title.position = "plot",
+    legend.position.inside = c(0.2, 0.9),
+    legend.position = "inside",
+  )
 
-ggsave("cpi_overshoot.svg",
+ggsave(
+  "cpi_overshoot.svg",
   bg = "white",
   width = 10,
   height = 10
