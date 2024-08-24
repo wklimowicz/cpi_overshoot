@@ -2,8 +2,7 @@ library(dplyr)
 library(ggplot2)
 library(purrr)
 library(lubridate)
-library(here)
-
+library(svglite)
 
 custom_theme <- function(plot_title_size = 30, colour = "black",
                          size = 20, angle = 0) {
@@ -137,7 +136,7 @@ ggsave("cpi_overshoot.svg",
   height = 10
 )
 
-# TODO: some instantenous measure. See here
+# TODO: instantenous measure. See here
 # https://www.janeeckhout.com/wp-content/uploads/Instantaneous_Inflation.pdf
 
 cpi_data %>%
