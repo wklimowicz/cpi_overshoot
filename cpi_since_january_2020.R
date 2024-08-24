@@ -3,6 +3,7 @@ library(ggplot2)
 library(purrr)
 library(lubridate)
 library(svglite)
+library(jsonlite)
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
@@ -37,9 +38,11 @@ cpi_data <- cpi |>
 
 above_trend <- cpi_data |>
   filter(date == max(date)) |>
-  transmute(value - trend) |>
+  transmute((value - trend) / trend) |>
   pluck(1) |>
-  round(2)
+  round(2) |>
+  (\(x) x * 100)()
+
 
 
 time_diff <- cpi_data |>

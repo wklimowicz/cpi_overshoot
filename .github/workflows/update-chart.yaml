@@ -17,6 +17,8 @@ jobs:
       #     r-version: 'renv'
       # - uses: r-lib/actions/setup-renv@v2 # If using Renv
       - uses: r-lib/actions/setup-r@v2 # Optional with renv, mandatory with setup-r-dependencies
+      # - name: Create library
+      # - run: dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE) # So you don't have to run setup-r
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 2
@@ -26,6 +28,7 @@ jobs:
             any::purrr
             any::lubridate
             any::svglite
+            any::jsonlite
       - name: Generate plot
         run: Rscript cpi_since_january_2020.R
       - name: Commit
