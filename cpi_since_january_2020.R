@@ -117,8 +117,7 @@ plot <- cpi_data |>
   scale_color_manual(values = cbbPalette) +
   theme(
     plot.title.position = "plot",
-    legend.position.inside = c(0.2, 0.9),
-    legend.position = "inside",
+    legend.position = "none",
   )
 
 ggsave(

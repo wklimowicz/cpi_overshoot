@@ -16,10 +16,11 @@ jobs:
       #   with:
       #     r-version: 'renv'
       # - uses: r-lib/actions/setup-renv@v2 -- If using Renv
+      #
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 2
-          extra-packages: |
+          packages: |
             any::dplyr
             any::ggplot2
             any::purrr
