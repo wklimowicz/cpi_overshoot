@@ -122,11 +122,14 @@ cpi_data |>
   ) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   labs(
-    title = "CPI vs Target",
-    x = "",
-    y = "CPI Index (2020 Jan = 100)",
-    color = ""
+    subtitle = "CPI Index (2020 Jan = 100)",
+    x = NULL,
+    y = NULL,
+    color = NULL
   ) +
+  theme(
+    plot.title.position = "plot"
+    )
   custom_theme() +
   scale_color_manual(values = cbbPalette)
 
@@ -139,18 +142,18 @@ ggsave("cpi_overshoot.svg",
 # TODO: instantenous measure. See here
 # https://www.janeeckhout.com/wp-content/uploads/Instantaneous_Inflation.pdf
 
-cpi_data %>%
-  mutate(change = (value - lag(value)) / lag(value)) %>%
-  mutate(change = (1 + change)^12 - 1) %>%
-  # filter(date >= "2020-01-01") %>%
-  ggplot() +
-  geom_line(aes(x = date, y = change), linewidth = 1.5) +
-  scale_y_continuous(labels = scales::percent) +
-  geom_text(aes(
-    x = date,
-    y = change,
-    label = round(change, 3) * 100,
-  ),
-  size = 6,
-  check_overlap = T
-  )
+# cpi_data %>%
+#   mutate(change = (value - lag(value)) / lag(value)) %>%
+#   mutate(change = (1 + change)^12 - 1) %>%
+#   # filter(date >= "2020-01-01") %>%
+#   ggplot() +
+#   geom_line(aes(x = date, y = change), linewidth = 1.5) +
+#   scale_y_continuous(labels = scales::percent) +
+#   geom_text(aes(
+#     x = date,
+#     y = change,
+#     label = round(change, 3) * 100,
+#   ),
+#   size = 6,
+#   check_overlap = T
+#   )
