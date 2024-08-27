@@ -31,6 +31,7 @@ jobs:
             any::svglite
             any::jsonlite
             any::pracma
+            any::tidyr
       - name: Generate plot
         run: Rscript cpi_since_january_2020.R
       - name: Commit
