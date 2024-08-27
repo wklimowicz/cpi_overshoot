@@ -85,7 +85,7 @@ plot <- cpi_data |>
   annotate(
     "text",
     x = date("2020-01-01"),
-    y = 111,
+    y = 114,
     label = paste0("Average since 2020: ", round(actual_growth * 100, 2), "%"),
     size = 9,
     color = cbbPalette[3]
